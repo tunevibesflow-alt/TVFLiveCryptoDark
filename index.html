@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>TuneVibesFlow (TVF) — Live Market (Buy Buttons)</title>
+  <style>
+    :root{--card:#071126;--accent:#00f6ff;--muted:#9aa4b2;--bg:#000}
+    body{margin:0;background:linear-gradient(180deg,var(--bg) 0%, #05060a 100%);color:#e6eef8;font-family:Inter,Segoe UI,Roboto,Arial,sans-serif}
+    .wrap{max-width:1100px;margin:24px auto;padding:0 18px}
+    header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px}
+    .title{display:flex;align-items:center;gap:12px}
+    .logo{width:56px;height:56px;border-radius:12px;object-fit:cover;box-shadow:0 8px 30px rgba(0,246,255,0.06)}
+    h1{color:var(--accent);margin:0;font-size:20px}
+    .socials a{color:var(--muted);text-decoration:none;margin-left:10px;font-weight:600}
+    .banner{width:100%;height:220px;object-fit:cover;border-radius:10px;box-shadow:0 20px 50px rgba(0,0,0,0.6);display:block;margin:12px 0}
+    .cards{display:flex;gap:20px;flex-wrap:wrap;justify-content:center;margin-top:6px}
+    .card{background:var(--card);padding:18px;border-radius:12px;width:320px;text-align:center;border:1px solid rgba(255,255,255,0.03)}
+    .coin-logo{width:80px;height:80px;border-radius:50%;object-fit:cover;margin:6px auto 12px;box-shadow:0 8px 30px rgba(0,246,255,0.06)}
+    .coin-title{font-weight:700;font-size:16px}
+    .symbol{color:var(--muted);font-weight:600;margin-left:8px;font-size:12px}
+    .price{font-size:18px;font-weight:700;color:#b7f8ff;margin-top:10px}
+    .btn{display:inline-block;padding:8px 12px;border-radius:10px;text-decoration:none;margin:8px 6px;font-weight:600}
+    .btn-primary{background:linear-gradient(90deg,#00f6ff,#7c3aed);color:#000}
+    .btn-outline{border:1px solid rgba(255,255,255,0.06);color:var(--muted);background:transparent}
+    .coming{margin-top:28px;text-align:center;color:var(--muted);padding:22px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00))}
+    table{width:100%;border-collapse:collapse;margin-top:18px;background:transparent;color:#e6eef8}
+    th,td{padding:10px 8px;border-bottom:1px solid rgba(255,255,255,0.03);text-align:left;font-size:14px}
+    th{color:var(--muted);font-weight:700;font-size:13px}
+    .change-up{color:#4ade80;font-weight:700}
+    .change-down{color:#fb7185;font-weight:700}
+    .timestamp{color:var(--muted);font-size:13px;margin-top:8px;text-align:right}
+    .footer{text-align:center;color:var(--muted);margin-top:26px;padding-bottom:30px}
+    @media (max-width:780px){.cards{flex-direction:column;align-items:center}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="title">
+        <img src="assets/tvf_coin.png" alt="TVF" class="logo" onerror="this.style.display='none'"/>
+        <div>
+          <h1>TuneVibesFlow (TVF)</h1>
+          <div style="color:var(--muted);font-size:13px">PandaPepe · TVF · Live crypto market</div>
+        </div>
+      </div>
+      <div class="socials">
+        <a href="https://x.com/PPEPETVF" target="_blank">X</a>
+        <a href="https://t.me/PandaPepeTVF" target="_blank">Telegram</a>
+      </div>
+    </header>
+
+    <img src="assets/banner.png" alt="banner" class="banner" onerror="this.style.display='none'"/>
+
+    <section class="cards" id="topcards">
+      <div class="card">
+        <img src="assets/tvf_coin.png" class="coin-logo" onerror="this.style.display='none'"/>
+        <div class="coin-title">TuneVibesFlow <span class="symbol">TVF</span></div>
+        <div id="tvf-price" class="price">Loading…</div>
+        <div style="margin-top:12px;">
+          <a id="tvf-view" class="btn btn-outline" href="#" target="_blank">View on Pump.Fun</a>
+          <a id="tvf-buy" class="btn btn-primary" href="#" target="_blank">💰 Buy TVF</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <img src="assets/pandapepe_logo.png" class="coin-logo" onerror="this.style.display='none'"/>
+        <div class="coin-title">PandaPepe <span class="symbol">PP</span></div>
+        <div id="pp-price" class="price">Loading…</div>
+        <div style="margin-top:12px;">
+          <a id="pp-view" class="btn btn-outline" href="#" target="_blank">View on CoinGecko</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="coming" id="coming">
+      <h3>✨ More Meme Coins Coming Soon...</h3>
+      <p style="color:var(--muted)">Follow us on socials for launch updates.</p>
+      <div class="countdown" id="countdown">Launch in: --d --h --m --s</div>
+    </section>
+
+    <!-- Live Market Section (below Coming Soon) -->
+    <section id="live-market" style="margin-top:20px">
+      <h3 style="color:var(--accent);margin-bottom:6px">🔥 Live Crypto Market</h3>
+      <div style="overflow:auto;background:transparent;padding:8px;border-radius:8px">
+        <table id="market-table" aria-live="polite">
+          <thead>
+            <tr><th>Coin</th><th>Symbol</th><th>Price (USD)</th><th>24h</th><th>Buy</th></tr>
+          </thead>
+          <tbody id="market-body">
+            <tr><td colspan="5" style="color:var(--muted)">Loading market data…</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="timestamp" id="market-timestamp">Updated: --</div>
+    </section>
+
+    <div class="footer">© 2025 TuneVibesFlow | Built for the Meme Coin Community ❤️</div>
+  </div>
+
+  <script>
+    // CONFIG — TVF Pump.fun + PandaPepe + top coins for CoinGecko
+    const TVF_PAGE = "https://pump.fun/coin/3WSiEa1jHqqqbwC8dmMXNivSc9BRy3G1xba3KBNXnCzh";
+    const TVF_API = "https://pump.fun/api/coins/3WSiEa1jHqqqbwC8dmMXNivSc9BRy3G1xba3KBNXnCzh";
+    const PANDAPEPE_CG_ID = "pandapepe";
+    // Top 10 coin IDs used by CoinGecko
+    const TOP_COINS = ["bitcoin","ethereum","solana","binancecoin","dogecoin","shiba-inu","ripple","cardano","polkadot","litecoin"];
+
+    // Helpers
+    function formatPrice(v){ return v==null ? '—' : '$' + Number(v).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:8}); }
+    function nowUTC(){ const d=new Date(); return d.toUTCString(); }
+
+    document.addEventListener('DOMContentLoaded', ()=>{
+      // set buttons for TVF and PandaPepe
+      document.getElementById('tvf-view').href = TVF_PAGE;
+      document.getElementById('tvf-buy').href = TVF_PAGE;
+      document.getElementById('pp-view').href = "https://www.coingecko.com/en/coins/" + PANDAPEPE_CG_ID;
+    });
+
+    // Fetch TVF from Pump.fun (best-effort)
+    async function fetchTVF(){
+      try {
+        const res = await fetch(TVF_API);
+        if(!res.ok) throw new Error('pump API returned ' + res.status);
+        const j = await res.json();
+        const val = j?.data?.price || j?.price || (j?.market_data && j.market_data.current_price && j.market_data.current_price.usd) || null;
+        return val ? Number(val) : null;
+      } catch(e){
+        // if Pump.fun fails, return null — UI shows "Updating Soon"
+        return null;
+      }
+    }
+
+    // Fetch PandaPepe price from CoinGecko (if listed)
+    async function fetchPP(){
+      try {
+        const res = await fetch('https://api.coingecko.com/api/v3/coins/' + PANDAPEPE_CG_ID);
+        if(!res.ok) return null;
+        const j = await res.json();
+        const val = j?.market_data?.current_price?.usd || null;
+        return val ? Number(val) : null;
+      } catch(e){
+        return null;
+      }
+    }
+
+    // Fetch market data for top coins from CoinGecko
+    async function fetchTopCoins(ids){
+      try {
+        const res = await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=' + ids.join(',') + '&order=market_cap_desc&per_page=10&page=1&sparkline=false&price_change_percentage=24h');
+        if(!res.ok) throw new Error('coingecko markets returned ' + res.status);
+        const j = await res.json();
+        return j; // array
+      } catch(e){
+        return null;
+      }
+    }
+
+    // Update UI: TVF, PandaPepe, and market table with Buy buttons
+    async function updateAll(){
+      const [tvfPrice, ppPrice] = await Promise.all([fetchTVF(), fetchPP()]);
+
+      // TVF & PP top cards
+      document.getElementById('tvf-price').textContent = tvfPrice!=null ? formatPrice(tvfPrice) : 'Updating Soon';
+      document.getElementById('pp-price').textContent = ppPrice!=null ? formatPrice(ppPrice) : 'Updating Soon';
+
+      // Market table
+      const marketBody = document.getElementById('market-body');
+      marketBody.innerHTML = '<tr><td colspan="5" style="color:var(--muted)">Loading market data…</td></tr>';
+
+      const top = await fetchTopCoins(TOP_COINS);
+      if(top && Array.isArray(top)){
+        marketBody.innerHTML = '';
+        const rows = [];
+        // add TVF & PandaPepe at top of table with Buy links
+        rows.push({id:'tvf', name:'TuneVibesFlow', symbol:'TVF', price:tvfPrice, change:null, buy:TVF_PAGE});
+        rows.push({id:'pandapepe', name:'PandaPepe', symbol:'PP', price:ppPrice, change:null, buy:'https://www.coingecko.com/en/coins/' + PANDAPEPE_CG_ID});
+        // append top coins (from CoinGecko response)
+        top.forEach(c => {
+          rows.push({
+            id: c.id,
+            name: c.name,
+            symbol: c.symbol.toUpperCase(),
+            price: c.current_price,
+            change: c.price_change_percentage_24h,
+            buy: 'https://www.coingecko.com/en/coins/' + c.id
+          });
+        });
+
+        // render rows with Buy button linking to CoinGecko (or Pump.fun for TVF)
+        for(const r of rows){
+          const tr = document.createElement('tr');
+          const priceCell = r.price != null ? formatPrice(r.price) : '—';
+          const changeCell = r.change != null ? (r.change >= 0 ? '<span class="change-up">+' + r.change.toFixed(2) + '%</span>' : '<span class="change-down">' + r.change.toFixed(2) + '%</span>') : '—';
+          const buyCell = '<a class="btn btn-primary" href="' + r.buy + '" target="_blank" rel="noreferrer">Buy</a>';
+          tr.innerHTML = '<td>' + r.name + '</td><td>' + r.symbol + '</td><td>' + priceCell + '</td><td>' + changeCell + '</td><td>' + buyCell + '</td>';
+          marketBody.appendChild(tr);
+        }
+        document.getElementById('market-timestamp').textContent = 'Updated: ' + nowUTC();
+      } else {
+        marketBody.innerHTML = '<tr><td colspan="5" style="color:var(--muted)">Market data not available right now.</td></tr>';
+        document.getElementById('market-timestamp').textContent = 'Updated: ' + nowUTC();
+      }
+    }
+
+    // initial + periodic refresh
+    window.addEventListener('load', ()=>{
+      updateAll();                  // initial
+      setInterval(updateAll, 30000) // every 30s
+    });
+
+    // Simple countdown (7 days default)
+    (function(){
+      const launch = new Date(Date.now() + 7*24*60*60*1000);
+      const el = document.getElementById('countdown');
+      function tick(){
+        const now = new Date();
+        let diff = Math.max(0, launch - now);
+        const days = Math.floor(diff / (1000*60*60*24));
+        diff -= days*1000*60*60*24;
+        const hours = Math.floor(diff / (1000*60*60));
+        diff -= hours*1000*60*60;
+        const mins = Math.floor(diff / (1000*60));
+        diff -= mins*1000*60;
+        const secs = Math.floor(diff/1000);
+        el.textContent = `Launch in: ${days}d ${hours}h ${mins}m ${secs}s`;
+      }
+      tick();
+      setInterval(tick,1000);
+    })();
+  </script>
+</body>
+</html>
